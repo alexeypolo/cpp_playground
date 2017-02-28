@@ -134,7 +134,7 @@ def main():
     assert(nodes_n == len(nodes))
     assert(bits_n + 1 == len(nodes[0])) # the last element is not a bit, but the index of the array
 
-    n = calc_clusters(nodes_n, bits_n, nodes, True)
+    n = calc_clusters(nodes_n, bits_n, nodes, False)
     print('clusters', n)
     return 0
 
