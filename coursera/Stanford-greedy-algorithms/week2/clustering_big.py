@@ -89,22 +89,21 @@ def calc_clusters(nodes_n, bits_n, nodes, debug_on):
             # find duplicates in nodes_subset, they correspond to hamming<=2 clusters in 'nodes'
             # mark all clusters in the original 'nodes'
             node0 = M_subset[0]
-            idx0 = node0[-1]
+            idx0 = get_cluster_id(cluster_ids, node0[-1])
             for node in M_subset[1:]:
                 # compare row to row, ignore the last element - the index
-                idx = node[-1]
+                idx = get_cluster_id(cluster_ids, node[-1])
                 if node0[0:-1] == node[0:-1]:
                     # TODO: cluster of size 1 is a frequent case, may deserve a special treatment
-                    cluster_id = get_cluster_id(cluster_ids, idx)
-                    if cluster_id == idx0:
+                    if idx == idx0:
                         pass # this node is already in 'idx0' cluster, nothing to do
                     else:
-                        if cluster_sizes[idx0] > cluster_sizes[cluster_id]:
-                            mergeto, mergefrom = idx0, cluster_id   # merge two clusters
+                        if cluster_sizes[idx0] > cluster_sizes[idx]:
+                            mergeto, mergefrom = idx0, idx   # merge two clusters
                         else:
-                            mergeto, mergefrom = cluster_id, idx0   # merge two clusters
+                            mergeto, mergefrom = idx, idx0   # merge two clusters
                             node0 = node
-                            idx0 = cluster_id
+                            idx0 = idx
                         #print('merging', mergeto, '<<', mergefrom)
                         merge_clusters(cluster_sizes, cluster_ids, mergeto, mergefrom)
                 else:
