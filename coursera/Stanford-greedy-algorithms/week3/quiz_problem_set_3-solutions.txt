@@ -1,0 +1,58 @@
+Task 1
+------
+Input alphabet:
+ fa=0.32, fb=0.25, fc=0.2, fd=0.18, and fe=0.05.
+Huffman code:
+      1
+     / \
+   /     \
+0.57     0.43
+/  \     / \
+a   b   c  0.23
+           / \
+          d   e
+
+a: 00, b: 01, c: 10, d:110, e:111
+
+average bit rate: 2*0.32 + 2*0.25 + 2*0.2 + 3*0.18 + 3*0.05 = 2.23
+
+1000 letters document would be coded with 1000*2.23 = 2230 bits
+
+Answer: 2230
+[OK]
+
+Task 2:
+-------
+Worst case - fully side-lobe tree, in the example below, longest encoding is for the last 2 symbols == 8 edges == n-1
+
++-+-+-+-+-+-+-+-9
+| | | | | | | |
+1 2 3 4 5 6 7 8
+
+Answer: n-1
+[OK]
+
+Task 3:
+------
+Solution: max freq < 0.33 ==> at least 4 symbols (0.33+0.33+0.33+0.01 = 1.00)
+Answer: if max freq < 0.33, then min encoding is >=2 bits
+[OK]
+
+Task 4:
+------
+Bad Answer: If a vertex is excluded from the optimal solution of a subproblem, then it is excluded from the optimal solutions of all bigger subproblems.
+[ERROR} This should not be selected 
+How many different smaller subproblems are used to compute the optimal solution of a subproblem?
+
+Correct answer: If a vertex is excluded from the optimal solution of two consecutive subproblems, then it is excluded from the optimal solutions of all bigger subproblems.
+[OK] By induction, since the optimal solution to a subproblem depends only on the solutions of the previous two subproblems.
+
+
+Task 5:
+------
+Bad Answer: The formula is correct in path graphs but is not always correct in trees.
+[ERROR] This should not be selected 
+Do weighted independent sets in trees have nice optimal substructure?
+
+Correct answer: The formula is always correct in trees, and it leads to an efficient dynamic programming algorithm.
+[OK] Indeed. What running time can you get?
