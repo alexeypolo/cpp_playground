@@ -1,0 +1,7 @@
+for 1 and 2 run "./huffman.py huffman.txt"
+1.  max bps is 19
+2.  min bps is 9
+
+3.  max weighted independent set:
+        01000110 [bad]
+        01000100 [bad]
