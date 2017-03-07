@@ -1,0 +1,19 @@
+# Format:
+# [knapsack_size][number_of_items]
+# [value_1] [weight_1]
+# [value_2] [weight_2]
+# ...
+6 4
+3 4
+2 3
+4 2
+4 3
+#
+# Solution:
+#
+# 0 0 0 0 0 0 0 x=0:W
+# 0 0 0 0 3 3 3
+# 0 0 0 2 3 3 3
+# 0 0 4 4 4 6 7
+# 0 0 4 4 4 8 8
+# i=0:4

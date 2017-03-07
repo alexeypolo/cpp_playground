@@ -1,0 +1,20 @@
+1. answer: Neigher algo is guaranteed ...o
+
+2. both napsack and sequence alignment can have the nested for loops in any order (i then j, or vice versa)
+
+3. input: 7 keys: 1,2,3,4,5,6,7
+          frequencies: w1=.05, w2=.4, w3=.08, w4=.04, w5=.1, w6=.1, w7=.23
+   question: what is the min possible average search time of a BST (binary search tree)?
+   answer: 2.18
+   see Python3 solution quiz_opt_bst.py
+
+4. Given strings X[m] and Y[n]
+    longest common substring - O(mn)
+    seq alignment with a different cost function - still O(mn)
+    longest common subsequence - O(mn) 
+    is one string a permutation of the other - can be solved in O(n), which is < O(mn)
+
+5. Min space requirements if we don't need to reconstruct the solution (i.e. only give the final number)
+    max-weight independenet set O(1) - lookup in previous 2 problems
+    seq alignment O(n) - becasue we lookup in the previous row
+    opt bst O(n^2) - because we lookup in n^2 subproblems
