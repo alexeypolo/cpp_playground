@@ -1,34 +1,40 @@
 #!/usr/bin/env python3
 import sys
 import numpy
-import time
 
+# Solve Knapsack without maintaining a full lookup array, but only the bare minimum.
+# As a result, it is impossible to reconstruct the optimal solution from the history we keep no history!
 def knapsack_huge(W, vw):
-    prev_i=numpy.zeros([W+1],dtype=numpy.int)
-    cur_i=numpy.zeros([W+1],dtype=numpy.int)
+    prev_i=(W+1)*[0]
+    cur_i=(W+1)*[0]
 
     for i in range(1,len(vw)+1):
         sys.stdout.write('%3.2f%%\r' % ((100.0 * i) / len(vw)))
         #print(i)
         for w in range(1,W+1):
             # without adding i'th item
-            without_vi = prev_i[w]
+            best = prev_i[w]
 
             # with adding i'th item (if the item can fit)
             vi,wi=vw[i-1] # 0-based
             if wi <= w:
                 with_vi = prev_i[w-wi] + vi
-                cur_i[w]=max([with_vi,without_vi])
-            else:
-                # i'th item is too big - doesn't fit in
-                cur_i[w]=without_vi
+                if with_vi > best:
+                    best = with_vi
+
+            cur_i[w]=best
+
         prev_i, cur_i = cur_i, prev_i
+
     sys.stdout.write('\n')
     return prev_i[-1]
 
+# Maintain a full lookup array, that can be used for reconstructing the
+# solution (i.e. the optimal set of items) by backtracking through the array
 def knapsack(W, vw):
     # lookup array
     A=numpy.zeros([len(vw)+1,W+1])
+
     # loop over capacities, including the largest, hence W+1
     #   w==0, knapsack of size 0, corresponds w==0, all-i. All set to 0
 
