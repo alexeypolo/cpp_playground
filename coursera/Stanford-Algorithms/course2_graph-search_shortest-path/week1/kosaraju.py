@@ -11,18 +11,10 @@
 import sys
 from collections import deque
 
-# TODO: use a datastructure to get this list in O(1)
-def get_remote_ends_of_outbound_edges(E, v):
-    return [edge[1] for edge in E if edge[0] == v]
-
-# TODO: use a datastructure to get this list in O(1)
-def get_remote_ends_of_inbound_edges(E, v):
-    return [edge[0] for edge in E if edge[1] == v]
-
-# E - list of edges
+# G - list of lists, i'th element is a list of endpoints of outbound edges starting at i'th vertex
 # n - number of vertices
-def DFS(E, n):
-    s = E[0][0]
+def DFS(G, n):
+    s = 1 # vertices are indexed 1-based. We start at vertex '1'
 
     #queue = [s]           # stack - for DFS
     queue = deque([s])    # fifo - for BFS
@@ -35,7 +27,7 @@ def DFS(E, n):
     while len(queue):
         #v = queue.pop()
         v = queue.popleft()
-        ws = get_remote_ends_of_outbound_edges(E, v)
+        ws = G[v] # list of remote endpoints of outbound edges
         for w in ws:
             if not explored[w]:
                 explored[w] = True
@@ -47,7 +39,7 @@ def main():
         print('USAGE:', sys.argv[0], '<input file with adjacency list, vertices are 1 based>')
         return -1
 
-    # Read edges and calculate the number of vertices. Assume - vertices are 1 based
+    # Read edges and calculate the number of vertices 'n'. Assume - vertices are 1 based
     n = -1
     E = []
     with open(sys.argv[1]) as f:
@@ -61,7 +53,25 @@ def main():
 
     print('edges', len(E), ', vertices', n)
 
-    DFS(E, n)
+    # G[0] is a dummy, vertices are 1 based, so we allocate one extra so that
+    # vertices ID can be used as an index into G. G[0] will never be referenced
+
+    # Graph - an i'th element is a list of vertices at the remote end of an
+    # oubound edge starting in i'th vertex
+    G = [[] for x in range(n + 1)]
+
+    # Transposed Graph - an i'th element is a list of vertices at the remote end of an
+    # inbound edge ending at i'th vertex
+    Gt = [[] for x in range(n + 1)]
+
+    for e in E:
+        v0,v1=e[0],e[1]
+        G[v0].append(v1)
+        Gt[v1].append(v0)
+
+    print('done preparing the dataset')
+
+    DFS(G, n)
 
     return 0
 
